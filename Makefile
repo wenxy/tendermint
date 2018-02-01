@@ -68,7 +68,7 @@ build_docker_test_image:
 test_cover:
 	# run the go unit tests with coverage
 	bash test/test_cover.sh
-	
+
 test_apps:
 	# run the app tests using bash
 	# requires `abci-cli` and `tendermint` binaries installed
@@ -122,8 +122,6 @@ test100:
 
 vagrant_test:
 	vagrant up
-	vagrant ssh -c 'make install'
-	vagrant ssh -c 'make test_unit_race'
 	vagrant ssh -c 'make test_integrations'
 
 ### go tests
