@@ -41,4 +41,11 @@ test:
     - cd "$PROJECT_PATH" && bash <(curl -s https://codecov.io/bash) -f coverage.txt
     - cd "$PROJECT_PATH" && mv coverage.txt "${CIRCLE_ARTIFACTS}"
     - cd "$PROJECT_PATH" && cp test/logs/messages "${CIRCLE_ARTIFACTS}/docker.log"
-    - cd "${CIRCLE_ARTIFACTS}" && tar czf logs.tar.gz *.log
+    - >
+      if [ -f "$PROJECT_PATH/test/logs/messages" ]; then
+        cd "$PROJECT_PATH" && cp test/logs/messages "${CIRCLE_ARTIFACTS}/docker.log"
+      fi
+    - >
+      if [ -f "${CIRCLE_ARTIFACTS}/docker.log" ]; then
+        cd "${CIRCLE_ARTIFACTS}" && tar czf logs.tar.gz *.log
+      fi
