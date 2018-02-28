@@ -30,7 +30,7 @@ test:
         cd "$PROJECT_PATH" && set -o pipefail && make test_integrations 2>&1 | tee test_integrations.log
       else
         cd "$PROJECT_PATH" && make get_tools && make get_vendor_deps
-        cd "$PROJECT_PATH" && set -o pipefail && make test_race
+        cd "$PROJECT_PATH" && set -o pipefail && bash test/test_cover.sh
       fi 
     - cd "$PROJECT_PATH" && make metalinter
   post:
