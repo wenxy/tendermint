@@ -25,8 +25,13 @@ dependencies:
 
 test:
   override:
-    - cd "$PROJECT_PATH" && set -o pipefail && make test_integrations 2>&1 | tee test_integrations.log:
-        timeout: 1800
+    - > 
+      if [ "$CIRCLE_BRANCH" == "master" ] || [ "$CIRCLE_BRANCH" == "develop" ]; then
+        cd "$PROJECT_PATH" && set -o pipefail && make test_integrations 2>&1 | tee test_integrations.log
+      else
+        cd "$PROJECT_PATH" && make get_tools && make get_vendor_deps
+        cd "$PROJECT_PATH" && set -o pipefail && make test_race
+      fi 
   post:
     - cd "$PROJECT_PATH" && mv test_integrations.log "${CIRCLE_ARTIFACTS}"
     - cd "$PROJECT_PATH" && bash <(curl -s https://codecov.io/bash) -f coverage.txt
