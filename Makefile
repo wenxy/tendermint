@@ -79,7 +79,7 @@ test:
 
 test_race:
 	@echo "--> Running go test --race"
-	@go test -v -race $(PACKAGES)
+	@go test -race $(PACKAGES)
 
 test_integrations:
 	@bash ./test/test.sh
