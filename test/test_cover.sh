@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -ex
+
 PKGS=$(go list github.com/tendermint/tendermint/... | grep -v /vendor/)
 
 set -e

@@ -16,8 +16,9 @@ dependencies:
     - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | sudo bash -s -- $DOCKER_VERSION
     - sudo start docker
     - sudo curl -sSL -o /usr/bin/docker-machine "https://github.com/docker/machine/releases/download/v$DOCKER_MACHINE_VERSION/docker-machine-`uname -s`-`uname -m`"; sudo chmod 0755 /usr/bin/docker-machine
+    - rm -rf "$PROJECT_PARENT_PATH"
     - mkdir -p "$PROJECT_PARENT_PATH"
-    - ln -sf "$HOME/$CIRCLE_PROJECT_REPONAME/" "$PROJECT_PATH"
+    - mv "$HOME/$CIRCLE_PROJECT_REPONAME" "$PROJECT_PATH"
   post:
     - go version
     - docker version
