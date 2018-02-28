@@ -32,9 +32,12 @@ test:
         cd "$PROJECT_PATH" && make get_tools && make get_vendor_deps
         cd "$PROJECT_PATH" && set -o pipefail && make test_race
       fi 
-  post:
     - cd "$PROJECT_PATH" && make metalinter
-    - cd "$PROJECT_PATH" && mv test_integrations.log "${CIRCLE_ARTIFACTS}"
+  post:
+    - >
+      if [ -f "$PROJECT_PATH/test_integration.log" ]; then
+        cd "$PROJECT_PATH" && mv test_integrations.log "${CIRCLE_ARTIFACTS}"
+      fi
     - cd "$PROJECT_PATH" && bash <(curl -s https://codecov.io/bash) -f coverage.txt
     - cd "$PROJECT_PATH" && mv coverage.txt "${CIRCLE_ARTIFACTS}"
     - cd "$PROJECT_PATH" && cp test/logs/messages "${CIRCLE_ARTIFACTS}/docker.log"
